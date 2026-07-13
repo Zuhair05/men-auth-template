@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
 const app = express();
+const path = require("path");
 
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
@@ -15,6 +16,8 @@ const authCtrl = require("./controllers/auth.js");
 
 // Set the port from environment variable or default to 3000
 const port = process.env.PORT ? process.env.PORT : "3000";
+
+app.use(express.static(path.join(__dirname, "public")));
 
 
 mongoose.connect(process.env.MONGODB_URI);
@@ -35,10 +38,14 @@ app.get('/', async (req, res) => {
   });
 
   app.get ('/auth/home', authCtrl.home);
-  
+
   app.get ('/auth/sign-up', authCtrl.showSignup);
 
+  app.post ('/auth/sign-up', authCtrl.signUp);
 
+  app.get ('/auth/sign-in', authCtrl.showSignInForm);
+
+  app.post ('/auth/sign-in', authCtrl.signIn);
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
