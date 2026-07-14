@@ -7,6 +7,7 @@ dotenv.config();
 const express = require("express");
 const app = express();
 const path = require("path");
+const session = require("express-session");
 
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
@@ -32,9 +33,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 // Morgan for logging HTTP requests
 app.use(morgan('dev'));
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+}));
 
 app.get('/', async (req, res) => {
   res.render('home.ejs')
+  user = req.session.user;
   });
 
   app.get ('/auth/home', authCtrl.home);

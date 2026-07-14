@@ -24,7 +24,8 @@ const signUp = async (req, res) => {
 
   userData.password = hashedPassword;
   const user = await User.create(userData);
-  res.send(user);
+  res.redirect('/');
+  // res.send(user);
 }
 
 const showSignInForm = (req, res) => {
@@ -43,7 +44,11 @@ const signIn = async (req, res) => {
   if (!validPassword) {
     return res.send('Invalid password.');
   }
-  res.send('Sign in successful.');
+  req.session.user = {
+    username : userInDatabase.username,
+    _id : userInDatabase._id
+  }
+  res.redirect('/');
 }
 
 module.exports = {
