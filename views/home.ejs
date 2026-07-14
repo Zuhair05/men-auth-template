@@ -1,4 +1,9 @@
 <%- include('./partials/nav.ejs') %>
-    <h1>Welcome to the App <%= user.username %> </h1>
+
+<% if (user) { %>
+        <h1>Welcome back, <%= user.username %>!</h1>
+    <% } else { %>
+      <h1>Welcome to the app! Please sign in or sign up to continue.</h1>
+    <% } %>
 </body>
 </html>

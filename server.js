@@ -8,6 +8,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const session = require("express-session");
+const {MongoStore} = require("connect-mongo");
 
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
@@ -37,6 +38,9 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
+  store : MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI
+  })
 }));
 
 app.get('/', async (req, res) => {
@@ -53,6 +57,17 @@ app.get('/', async (req, res) => {
   app.get ('/auth/sign-in', authCtrl.showSignInForm);
 
   app.post ('/auth/sign-in', authCtrl.signIn);
+
+  app.delete ('/auth/sign-out', authCtrl.signOut);
+
+  app.get('/dashboard', async (req, res) => {
+    if (!req.session.user) {
+      return res.redirect('/auth/sign-in');
+    }
+    res.render('dashboard.ejs', {
+      user: req.session.user
+    });
+  });
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

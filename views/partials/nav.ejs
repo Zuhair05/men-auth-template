@@ -10,7 +10,11 @@
   <nav>
     <a href="/">Home</a>
     <% if (user) { %>
-      <a href="/auth/sign-out">Sign Out</a>
+        <form action="/auth/sign-out?_method=DELETE" method="POST" >
+            
+          <button class="btn" type="submit">Sign Out</button>
+        </form>
+        <a href="/dashboard">View Dashboard</a>
     <% } else { %>
       <a href="/auth/sign-up">Sign Up</a>
       <a href="/auth/sign-in">Sign In</a>
