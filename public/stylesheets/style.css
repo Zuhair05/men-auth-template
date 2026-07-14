@@ -1,13 +1,14 @@
-* {
+/* * {
     box-sizing: border-box;
-}
+} */
 
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: beige;
-    text-align: center;
+    font-family: cursive;
 }
+/* 
 
 nav,
 main {
@@ -40,4 +41,4 @@ form {
    border: none;
    cursor: pointer;
    font-size: 1rem;
-}
+} */
